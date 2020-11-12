@@ -26,14 +26,17 @@ def rsvp():
     session['RSVP'] = True
     session['name'] = name
     flash("Yay!")
-    print(session['RSVP'])
-    print(session['name'])
+
     return redirect("/")
 
 
 @app.route("/games")
 def games():
+    
     games = Game.query.all()
+    if session['RSVP'] == False:
+        return redirect("/")
+    
     return render_template("games.html", games=games)
 
 
